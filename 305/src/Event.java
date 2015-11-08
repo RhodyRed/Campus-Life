@@ -128,27 +128,9 @@ public class Event {
 	{
 		return materials;
 	}
-	
-	
 
-	public boolean getRepeatSun()
-	{
-		return repeatSun;
-	}
-	
-	public boolean getRepeatMon()
-	{
-		return repeatMon;
-		
-	}
-	
-	/** so on...
-	 * ...
-	 * ...
-	 */
 	
 	
-
 	
 
 }

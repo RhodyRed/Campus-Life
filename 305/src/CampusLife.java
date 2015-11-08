@@ -28,7 +28,7 @@ public class CampusLife {
 		
 		
 
-		campusLife.setSize(600,300); //just some random size and color	
+		campusLife.setSize(800,600); //just some random size and color	
 		campusLife.setVisible(true);
 
 	}
