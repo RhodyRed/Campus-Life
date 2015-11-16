@@ -96,6 +96,7 @@ public class Event {
 	 * Getter methods
 	 * 
 	 */
+	
 	public String getName()
 	{
 		return name;
@@ -128,6 +129,10 @@ public class Event {
 	{
 		return materials;
 	}
+	
+
+	
+
 
 	
 	

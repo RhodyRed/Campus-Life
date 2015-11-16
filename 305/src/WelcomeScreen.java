@@ -18,7 +18,7 @@ import javax.swing.JFrame;
  */
 public class WelcomeScreen extends JFrame implements MouseListener  {
 	
-
+	protected EventCollection collection;
 	private int x,y; //mouse clicked coordinates
 	Scanner keyboard = new Scanner(System.in);
 	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
@@ -31,22 +31,15 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		//Just testing to see how the Calendar class works
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		Date d = calendar.getTime();
-		
-		/**
-	    int month = calendar.get(Calendar.MONTH) + 1;
-	    int year = calendar.get(Calendar.YEAR);
-	    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-	    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-	    int hour = calendar.get(Calendar.HOUR);
-	    int minutes = calendar.get(Calendar.MINUTE);
-	    **/
-
 	    SimpleDateFormat df = new SimpleDateFormat("K:mm a");
 	    String time = df.format(d);
 	    String date = formatter.format(d);
-	    
 	    System.out.println("Current date is " + date);
 	    System.out.println("Current time is " + time);
+	    
+	    
+	    //Collection is created
+	    collection = new ArrayEventCollection();
 
 		
 	}
@@ -99,42 +92,6 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 
 			
 		}
-		
-		/**
-		 * if(create event button is clicked){
-		 * 
-		 * Prompt for details:  (name of event, date, time, location, materials, ask if they would
-		 * like to repeat the event every week)
-		 * 
-		 * store the details into variables 
-		 * eventName = ...
-		 * date = ... (month,day,year)
-		 * time = ... (hour,minute, am or pm)
-		 * location = ...
-		 * materials = ...
-		 * 
-		 * repeat = ...will ask which days to repeat and store in an int array?
-		 * 
-		 * Check if there are any events conflicting with the date/time the user inputed
-		 *
-		 * if there is a conflicting issue give error message
-		 * 
-		 * 
-		 * 
-		 * Event newEvent = new Event(eventName,month,day,year,hour,minutes, amOrpm,location,materials,repeat);
-		 * 
-		 * 
-		*/
-		
-		/**
-		 * if(day/week/month view tab is clicked)
-		 * switch to that view
-		 */
-		
-		/**
-		 * if an event is clicked, bring up it's details and 
-		 * a delete event button
-		 */
 		
 	
 		
@@ -204,6 +161,8 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		}
 		
 		Event newEvent = new Event(name,m,d,y,h,min,ampm,materials,loc,r);
+		collection.add(newEvent);
+		
 		//Then add it to the collection (haven't created it yet)
 		
 	}
