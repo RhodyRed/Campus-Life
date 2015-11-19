@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CalyTheCalendar 
+import javax.swing.JPanel;
+
+public class CalyTheCalendar extends JPanel
 {
 	/**
 	 * Structures the format of the date
@@ -43,16 +45,16 @@ public class CalyTheCalendar
 	 * Output the calendar to a window
 	 * to be displayed
 	 */
-	public void displayCalendar(Graphics pane)
+	public void displayCalendar(Graphics pane, int xPos, int yPos)
 	{
 		pane.setColor(Color.darkGray);
-		pane.fillRect(0, 0, 300, 300);
+		pane.fillRect(xPos, yPos, 300, 300);
 		((Graphics2D) pane).setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-	    pane.fillRect(0, 0, 300, 300);
+	    pane.fillRect(xPos, yPos, 300, 300);
 	    pane.setColor(Color.WHITE);
-	    pane.drawString(month.format(date), 34, 36);
+	    pane.drawString(month.format(date), xPos+ 34,yPos+ 36);
 	    pane.setColor(Color.white);
-	    pane.drawString(year.format(date), 235, 36);
+	    pane.drawString(year.format(date),xPos+ 235,yPos+ 36);
 
 	    Calendar today = Calendar.getInstance();
 	    today.setTime(date);
@@ -63,8 +65,8 @@ public class CalyTheCalendar
 	    for (int week = 0; week < 6; week++) {
 	      for (int d = 0; d < 7; d++) {
 	        Color col = Color.WHITE;
-	          pane.drawString(day.format(cal.getTime()), d * 30 + 46 + 4,
-	              week * 29 + 81 + 20);
+	          pane.drawString(day.format(cal.getTime()), xPos+d * 30 + 46 + 4,
+	        		  yPos+ week * 29 + 81 + 20);
 	        cal.add(Calendar.DATE, +1);
 	      }
 	    }
