@@ -14,7 +14,11 @@ public class Event {
 	
 	private boolean repeatSun = false;
 	private boolean repeatMon = false;
-	private boolean repeatDays = false;
+	private boolean repeatTue = false;
+	private boolean repeatWed = false;
+	private boolean repeatThu = false;
+	private boolean repeatFri = false;
+	private boolean repeatSat = false;
 	
 	public Event(){
 		
@@ -46,7 +50,7 @@ public class Event {
 		
 		if (repeat != null)
 		{
-			repeatDays(true);
+
 			for(int i = 0; i<repeat.length; i++)
 			{
 				if(repeat[i] == 0)
