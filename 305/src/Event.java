@@ -7,7 +7,7 @@ public class Event {
 	private int year;
 	private int hour;
 	private int minute;
-	private int amOrpm;
+	private int amORpm;
 	private String loc;
 	private String materials;
 	private int[] repeat;
@@ -33,7 +33,7 @@ public class Event {
 		day = d;
 		hour = h;
 		minute = min;
-		amOrpm = ampm;
+		amORpm = ampm;
 		loc = l;
 		materials = mat;
 		repeat = r;
@@ -49,21 +49,38 @@ public class Event {
 			repeatDays(true);
 			for(int i = 0; i<repeat.length; i++)
 			{
-				if(repeat[i] == '1')
+				if(repeat[i] == 0)
 				{
 					setSunRepeat(true);
 				}
-				else if (repeat[i] == '2')
+				else if (repeat[i] == 1)
 				{
 					setMonRepeat(true);
 				}
-				/** so on..
-				 * 
-				 */
-			}
-		}
+				else if (repeat[i] == 2)
+				{
+					setTueRepeat(true);
+				}
+				else if (repeat[i] == 3)
+				{
+					setWedRepeat(true);
+				}
+				else if (repeat[i] == 4)
+				{
+					setThuRepeat(true);
+				}
+				else if (repeat[i] == 5)
+				{
+					setFriRepeat(true);
+				}
+				else if (repeat[i] == 6)
+				{
+					setSatRepeat(true);
+				}
+			} // end for
+		} //end if
 		
-	}
+	} //end method
 
 	/**
 	 * Maybe check everyday if we have any events that have repeatDays = true, if so then we save onto this event
@@ -102,10 +119,39 @@ public class Event {
 		return name;
 	}
 	
+	public int getMonth()
+	{
+		return month;
+	}
 	
 	public int getDay()
 	{
 		return day;
+	}
+	
+	public int getYear()
+	{
+		return year;
+	}
+	
+	public int getHour()
+	{
+		return hour;
+	}
+	
+	public int getMinute()
+	{
+		return minute;
+	}
+	
+	public String getLoc()
+	{
+		return loc;
+	}
+	
+	public String getMaterials()
+	{
+		return materials;
 	}
 	
 	/**
@@ -117,25 +163,6 @@ public class Event {
 		return time;
 	}
 	*/
-	
-	
-	public String getLoc()
-	{
-		return loc;
-	}
-	
-	
-	public String getMaterials()
-	{
-		return materials;
-	}
-	
-
-	
-
-
-	
-	
 	
 
 }
