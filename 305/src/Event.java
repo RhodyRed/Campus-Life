@@ -164,5 +164,50 @@ public class Event {
 	}
 	*/
 	
+	
+	/**
+	 * Setter methods
+	 * 
+	 */
+	
+	public void setName(String newname)
+	{
+		name = newname;
+	}
+	
+	public void setMonth(int newMonth)
+	{
+		month = newMonth;
+	}
+	
+	public void setDay(int newDay)
+	{
+		day = newDay;
+	}
+	
+	public void setYear(newYear)
+	{
+		year = newYear;
+	}
+	
+	public void setHour(int newHour)
+	{
+		hour = newHour;
+	}
+	
+	public void getMinute(int newMinute)
+	{
+		minute = newMinute;
+	}
+	
+	public void getLoc(String newLoc)
+	{
+		loc = newLoc;
+	}
+	
+	public void setMaterials(String newMaterials)
+	{
+		materials = newMaterials;
+	}
 
 }
