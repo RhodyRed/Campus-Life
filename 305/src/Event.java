@@ -7,10 +7,11 @@ public class Event {
 	private int year;
 	private int hour;
 	private int minute;
-	private int amORpm;
+	private String amORpm;
 	private String loc;
 	private String materials;
 	private int[] repeat;
+	private boolean repeatDays = false;
 	
 	private boolean repeatSun = false;
 	private boolean repeatMon = false;
@@ -29,7 +30,7 @@ public class Event {
 	 * will say string for now
 	 */
 	public Event(String n, int m,  int d, int y, int h, 
-						int min, int ampm, String l, String mat, int[] r)
+						int min, String ampm, String l, String mat, int[] r)
 	{
 		
 		name = n;
@@ -50,6 +51,7 @@ public class Event {
 		
 		if (repeat != null)
 		{
+			repeatDays(true);
 
 			for(int i = 0; i<repeat.length; i++)
 			{
@@ -84,7 +86,10 @@ public class Event {
 			} // end for
 		} //end if
 		
-	} //end method
+	}
+	//end method
+
+
 
 	/**
 	 * Maybe check everyday if we have any events that have repeatDays = true, if so then we save onto this event
@@ -104,12 +109,31 @@ public class Event {
 	{
 		repeatMon = b;
 	}
-	
-	/**
-	 * rest of the week
-	 */
-	
-	
+	public void setTueRepeat(boolean b) 
+	{
+		repeatTue = b;
+
+	}
+	public void setWedRepeat(boolean b) 
+	{
+		repeatWed = b;
+
+	}
+	public void setThuRepeat(boolean b) 
+	{
+		repeatThu = b;
+
+	}
+	public void setFriRepeat(boolean b) 
+	{
+		repeatFri = b;
+
+	}
+	public void setSatRepeat(boolean b) 
+	{
+		repeatSat = b;
+
+	}
 	
 	
 	
@@ -189,7 +213,7 @@ public class Event {
 		day = newDay;
 	}
 	
-	public void setYear(newYear)
+	public void setYear(int newYear)
 	{
 		year = newYear;
 	}

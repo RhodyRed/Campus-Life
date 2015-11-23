@@ -38,9 +38,10 @@ public class ArrayEventCollection implements EventCollection
 				temp[i] = events[i];
 				events = temp;
 			}
-			events[size] = someEvent;
-			changeSelection(size++);
 		}
+		events[size] = someEvent;
+		changeSelection(size++);
+		
 		
 	}
 
@@ -91,6 +92,17 @@ public class ArrayEventCollection implements EventCollection
 
 	public void paint(Graphics pane) {
 
+		
+		
+	}
+	
+	public void display()
+	{
+		for(int i =0; i<events.length; i++)
+		{
+			System.out.println(events[i].getName());
+			
+		}
 		
 	}
 	

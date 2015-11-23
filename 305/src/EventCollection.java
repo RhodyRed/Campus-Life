@@ -22,6 +22,9 @@ public interface EventCollection {
 	
 	public void paint(Graphics pane);
 
+
+	public void display();
+
 	
 
 }
