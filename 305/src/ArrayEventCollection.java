@@ -98,7 +98,7 @@ public class ArrayEventCollection implements EventCollection
 	
 	public void display()
 	{
-		for(int i =0; i<events.length; i++)
+		for(int i =0; i<size; i++)
 		{
 			System.out.println(events[i].getName());
 			

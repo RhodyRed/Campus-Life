@@ -1,3 +1,8 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * WORK IN PROGRESS
  * This class is for checking the time and checks if the current date+time is 
@@ -7,27 +12,48 @@
 public class Repeat implements TimerListener {
 
 	private Timer timer;
-	private String time;
-	private String date;
+	private String currentDate;
 	private EventCollection collection;
+	private Calendar calendar;
+	private Date d;
+	SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy K:mm a");
 
 	
-	public Repeat(EventCollection collection, String time, String date) 
+	public Repeat(EventCollection collection) 
 	{
-		this.time = time;
-		this.date = date;
+
 		this.collection = collection;
 		
 	    timer = new Timer(this); //Creates a timer
 	    timer.start();
+	    
 	
 	}
 	
 	public void refresh() {
-		System.out.println(time);
-		timer.setPeriod(60000); //Timer set to 60000 milisecs here (1 second)
+		timer.setPeriod(100000); //Timer set to 60000 milisecs here (1 second)
+		calendar = Calendar.getInstance(TimeZone.getDefault());
+		d = calendar.getTime();
+	    currentDate = formatter.format(d);
+		System.out.println(currentDate);
+		
+		 
+		
+		moveEvent();
+		
 		
 	}
+
+	/**
+	 * This method keeps going through the collection and checking
+	 * if any of the event's end time is equal to the current time
+	 * if so then you move it to the next day that it should repeat
+	 */
+	private void moveEvent() {
+		
+		
+	}
+	
 
 
 

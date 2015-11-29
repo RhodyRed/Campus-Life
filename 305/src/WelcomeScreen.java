@@ -3,9 +3,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -16,12 +18,14 @@ import javax.swing.JFrame;
  *  User interaction occurs here
  * 
  */
-public class WelcomeScreen extends JFrame implements MouseListener,TimerListener  {
+public class WelcomeScreen extends JFrame implements MouseListener  {
 	
 	protected EventCollection collection;
 	private int x,y; //mouse clicked coordinates
-	private String time;
-	private String date;
+	private String time; //current time
+	private String date; //current date
+	private Date start;//event start date+time
+	private Date end; //event end date+time
 	
 	Scanner keyboard = new Scanner(System.in);
 	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
@@ -32,7 +36,7 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 		
 		addMouseListener(this);
 		
-		//Just testing to see how the Calendar class works
+		//This grabs current date+time
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		Date d = calendar.getTime();
 	    SimpleDateFormat df = new SimpleDateFormat("K:mm a");
@@ -43,7 +47,7 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 	    
 	    //Collection is created
 	    collection = new ArrayEventCollection();
-	    Repeat repeating = new Repeat(collection,time,date);
+	    Repeat repeating = new Repeat(collection);
 
 
 	    
@@ -58,7 +62,8 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 	{
 		
 		
-		
+		p.drawString("Create Event", 50, 50);	//Test "buttons"
+		p.drawString("Display the collection", 50, 350);	
 	}
 
 	
@@ -103,7 +108,7 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 		}
 		
 		//Click bottom left of screen to see the events in collection
-		if(x<=100 && y>=300)
+		if(x<=200 && y>=300)
 		{
 			collection.display();
 		}
@@ -118,6 +123,10 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 
 
 	private void createEvent() {
+		
+		
+		
+		
 		/**
 		 * Creating an event
 		 */
@@ -125,27 +134,65 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 		System.out.print("Name: ");
 		String name = keyboard.next();
 		
-		System.out.print("Month: ");
-		int m = keyboard.nextInt();
-		System.out.print("Day: ");
-		int d = keyboard.nextInt();
-		System.out.print("Year: ");
-		int y = keyboard.nextInt();
+		System.out.print("Enter Start Date in MM/DD/YYYY format: "); //MUST BE FORMATTED PROPERLY ex. 10/22/2015
+		String sDate = keyboard.next();
 		
+		System.out.print("Enter Start Time in H:MM format: "); //ex. 1:30
+		String sTime = keyboard.next();
 		
-		System.out.print("Hour: ");
-		int h = keyboard.nextInt();
-		System.out.print("Min: ");
-		int min = keyboard.nextInt();
+		System.out.print("AM OR PM: ");  //type AM or PM
+		String sAM_PM = keyboard.next();
 		
-		System.out.print("AM or PM: ");
-		String ampm = keyboard.next(); 
+		System.out.print("Enter End Date in MM/DD/YYYY format: ");
+		String eDate = keyboard.next();
+		
+		System.out.print("Enter end Time in H:MM (AM or PM) format: ");
+		String eTime = keyboard.next();
+		
+		System.out.print("AM OR PM: ");
+		String eAM_PM = keyboard.next();
+		
+		String startDate = sDate+" "+sTime+ " "+sAM_PM; //combines the date and time into a single string
+		String endDate =  eDate+" "+eTime+ " "+eAM_PM;
+		
+
+        try {
+			start = new SimpleDateFormat("MM/dd/yyy K:mm a").parse(startDate);	//Formats the strings
+	        end = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(endDate);
+	        
+            if (start.compareTo(end) >= 0) { 		//Start is after end, therefore invalid
+            	while(start.compareTo(end) >= 0)	//Keeps asking for end date until valid
+            	{
+            		System.out.println("End date must be after start date");
+            		
+            		System.out.print("Enter End Date in MM/DD/YYYY format: ");
+            		String eDate2 = keyboard.next();
+            		
+            		System.out.print("Enter end Time in H:MM format: ");
+            		String eTime2 = keyboard.next();
+            		
+            		System.out.print("AM OR PM: ");
+            		String eAM_PM2 = keyboard.next();
+            		
+            		String endDate2 =  eDate2+" "+eTime2 + " "+eAM_PM2;
+            		end = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(endDate2);
+            	}	
+
+            } 
+	        
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+        
+        
 		
 		System.out.print("Materials: ");
 		String materials = keyboard.next();
 		
 		System.out.print("Location: ");
 		String loc = keyboard.next();
+	
 		
 
 		
@@ -176,7 +223,10 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 			
 		}
 		
-		Event newEvent = new Event(name,m,d,y,h,min,ampm,materials,loc,r);
+
+        
+		
+		Event newEvent = new Event(name, start,end,materials,loc,r);
 		collection.add(newEvent);
 		
 		
@@ -189,6 +239,8 @@ public class WelcomeScreen extends JFrame implements MouseListener,TimerListener
 		
 		
 	}
+	
+
 
 	
 	

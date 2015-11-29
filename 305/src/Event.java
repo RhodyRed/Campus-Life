@@ -1,18 +1,15 @@
+import java.util.Date;
+
 
 public class Event {
 	
 	private String name;
-	private int day;
-	private int month;
-	private int year;
-	private int hour;
-	private int minute;
-	private String amORpm;
+	private Date start;
+	private Date end;
 	private String loc;
 	private String materials;
 	private int[] repeat;
 	private boolean repeatDays = false;
-	
 	private boolean repeatSun = false;
 	private boolean repeatMon = false;
 	private boolean repeatTue = false;
@@ -29,16 +26,11 @@ public class Event {
 	 * Constructor, not entirely sure what the types will be for date & time,
 	 * will say string for now
 	 */
-	public Event(String n, int m,  int d, int y, int h, 
-						int min, String ampm, String l, String mat, int[] r)
+	public Event(String n, Date s, Date e, String l, String mat, int[] r)
 	{
-		
 		name = n;
-		month = m;
-		day = d;
-		hour = h;
-		minute = min;
-		amORpm = ampm;
+		start = s;
+		end = e;
 		loc = l;
 		materials = mat;
 		repeat = r;
@@ -147,30 +139,18 @@ public class Event {
 		return name;
 	}
 	
-	public int getMonth()
+	public Date getStartDate()
 	{
-		return month;
+		return start;
+		
 	}
+	public Date getEndDate()
+	{
+		return end;
+		
+	}
+
 	
-	public int getDay()
-	{
-		return day;
-	}
-	
-	public int getYear()
-	{
-		return year;
-	}
-	
-	public int getHour()
-	{
-		return hour;
-	}
-	
-	public int getMinute()
-	{
-		return minute;
-	}
 	
 	public String getLoc()
 	{
@@ -182,51 +162,18 @@ public class Event {
 		return materials;
 	}
 	
-	/**
-	 * format the time into a string maybe?
-
-	public String getTime()
-	{
-
-		return time;
-	}
-	*/
-	
 	
 	/**
 	 * Setter methods
 	 * 
 	 */
 	
+	
 	public void setName(String newname)
 	{
 		name = newname;
 	}
 	
-	public void setMonth(int newMonth)
-	{
-		month = newMonth;
-	}
-	
-	public void setDay(int newDay)
-	{
-		day = newDay;
-	}
-	
-	public void setYear(int newYear)
-	{
-		year = newYear;
-	}
-	
-	public void setHour(int newHour)
-	{
-		hour = newHour;
-	}
-	
-	public void getMinute(int newMinute)
-	{
-		minute = newMinute;
-	}
 	
 	public void getLoc(String newLoc)
 	{
