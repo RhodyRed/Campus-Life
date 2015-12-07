@@ -29,13 +29,24 @@ public class Event {
 	public Event(String n, Date s, Date e, String l, String mat, int[] r)
 	{
 		name = n;
-		start = s;
-		end = e;
+		setStartDate(s);
+		setEndDate(e);
 		loc = l;
 		materials = mat;
 		repeat = r;
 		checkForRepeats();
+
 	}
+	
+	public void setStartDate(Date s) {
+		start = s;
+		
+	}
+	public void setEndDate(Date e)
+	{
+		end = e;
+	}
+
 	
 
 	
@@ -133,6 +144,46 @@ public class Event {
 	 * Getter methods
 	 * 
 	 */
+	public boolean getRepeatDays()
+	{
+		return repeatDays;
+	}
+	
+	public boolean getSunRepeat()
+	{
+		return repeatSun;
+	}
+	
+	public boolean getMonRepeat()
+	{
+		return repeatMon;
+	}
+	public boolean getTueRepeat() 
+	{
+		return repeatTue;
+
+	}
+	public boolean getWedRepeat() 
+	{
+		return repeatWed;
+
+	}
+	public boolean getThuRepeat() 
+	{
+		return repeatThu;
+
+	}
+	public boolean getFriRepeat() 
+	{
+
+		return repeatFri;
+	}
+	public boolean getSatRepeat() 
+	{
+
+		return repeatSat;
+	}
+	
 	
 	public String getName()
 	{
@@ -184,5 +235,6 @@ public class Event {
 	{
 		materials = newMaterials;
 	}
+
 
 }

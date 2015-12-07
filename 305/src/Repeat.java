@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,7 @@ public class Repeat implements TimerListener {
 	private Calendar calendar;
 	private Date d;
 	SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy K:mm a");
+	private Date d2;
 
 	
 	public Repeat(EventCollection collection) 
@@ -31,12 +33,16 @@ public class Repeat implements TimerListener {
 	}
 	
 	public void refresh() {
-		timer.setPeriod(100000); //Timer set to 60000 milisecs here (1 second)
+		timer.setPeriod(1000); //Timer set to 1 second
 		calendar = Calendar.getInstance(TimeZone.getDefault());
 		d = calendar.getTime();
-	    currentDate = formatter.format(d);
-		System.out.println(currentDate);
-		
+		currentDate = formatter.format(d);
+		try {
+			d2 = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(currentDate);
+		} catch (ParseException e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	   }
 		 
 		
 		moveEvent();
@@ -50,11 +56,12 @@ public class Repeat implements TimerListener {
 	 * if so then you move it to the next day that it should repeat
 	 */
 	private void moveEvent() {
+			collection.compareDates(d2);
+
+		}
 		
 		
 	}
 	
 
 
-
-}

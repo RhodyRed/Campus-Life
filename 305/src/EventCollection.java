@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.util.Date;
 
 
 public interface EventCollection {
@@ -24,6 +25,10 @@ public interface EventCollection {
 
 
 	public void display();
+
+
+
+	public void compareDates(Date d);
 
 	
 

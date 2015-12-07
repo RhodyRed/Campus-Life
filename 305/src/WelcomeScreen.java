@@ -29,6 +29,11 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	
 	Scanner keyboard = new Scanner(System.in);
 	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
+	private Date testStart1;
+	private Date testEndStart1;
+	private Date testEndStart2;
+	private Date testStart2;
+	private Date d;
 	
 	
 	
@@ -38,7 +43,7 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		//This grabs current date+time
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-		Date d = calendar.getTime();
+		d = calendar.getTime();
 	    SimpleDateFormat df = new SimpleDateFormat("K:mm a");
 	    time = df.format(d);
 	    date = formatter.format(d);
@@ -47,10 +52,39 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	    
 	    //Collection is created
 	    collection = new ArrayEventCollection();
-	    Repeat repeating = new Repeat(collection);
-
-
 	    
+	    //I MADE 2 TEST EVENTS HERE
+	    String testDate1= "10/22/2013 1:30 PM";
+	    String testEndDate1 = "12/6/2015 9:05 PM";
+	    String testDate2= "9/12/2013 3:30 PM";
+	    String testEndDate2 = "12/6/2015 7:48 PM";
+	    
+		
+		try {
+			testStart1 = new SimpleDateFormat("MM/dd/yyy K:mm a").parse(testDate1);	//Formats the strings
+			testEndStart1 = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(testEndDate1);
+			testStart2 = new SimpleDateFormat("MM/dd/yyy K:mm a").parse(testDate2);	//Formats the strings
+			testEndStart2 = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(testEndDate2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        int [] testR1 = {1,4};
+        int [] testR2 = {};
+        
+        
+        
+	    Event testEvent1 = new Event("Event 1", testStart1,testEndStart1,"","",testR1);
+	    Event testEvent2 = new Event("Event 2", testStart2,testEndStart2,"","",testR2);
+	    collection.add(testEvent1);
+	    collection.add(testEvent2);
+	    
+
+	    Repeat repeating = new Repeat(collection);
+	    
+	    
+
+
+
 
 		
 	}
@@ -61,9 +95,10 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	public void paint(Graphics p) 
 	{
 		
-		
 		p.drawString("Create Event", 50, 50);	//Test "buttons"
-		p.drawString("Display the collection", 50, 350);	
+		p.drawString("Display the collection", 50, 350);
+
+
 	}
 
 	
@@ -112,6 +147,7 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		{
 			collection.display();
 		}
+		
 		
 	
 		

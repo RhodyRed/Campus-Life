@@ -1,4 +1,7 @@
 import java.awt.Graphics;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 public class ArrayEventCollection implements EventCollection
@@ -8,6 +11,7 @@ public class ArrayEventCollection implements EventCollection
 	private Event [] events;
 	private int size;
 	private int selected;
+	private Calendar calendar;
 	
 	public ArrayEventCollection()
 	{
@@ -88,23 +92,54 @@ public class ArrayEventCollection implements EventCollection
 
 		return (size > 0) && (selected >= 0) && (selected < size);
 	}
+	
+	public void compareDates(Date d)
+	{
+
+		calendar = Calendar.getInstance(TimeZone.getDefault()); //Create a calendar instance
+
+		for (int i = 0; i<size; i++) //Go through the collection
+			
+			if (d.equals(events[i].getEndDate())) //If the current date+time is equal to the end date
+												  //of one of the events
+			{
+				System.out.println(events[i].getName() + " has ended"); 
+				if (events[i].getRepeatDays() == true) //If the event is repeating
+				{
+					calendar.setTime(events[i].getStartDate()); //Move the event start date to the next week
+					calendar.add(Calendar.DATE,7);	
+					Date nextWeekStart = calendar.getTime();
+					events[i].setStartDate(nextWeekStart);
+					
+					calendar.setTime(events[i].getEndDate());	//Move the event end date to the next week
+					calendar.add(Calendar.DATE,7);
+					Date nextWeekEnd = calendar.getTime();
+					events[i].setEndDate(nextWeekEnd);
+					
+				}
+				
+				/* otherwise remove it from the collection */
+				
+			}
+	}
 
 
 	public void paint(Graphics pane) {
-
-		
 		
 	}
 	
 	public void display()
 	{
+		System.out.println("---EVENTS---");
 		for(int i =0; i<size; i++)
 		{
-			System.out.println(events[i].getName());
+			System.out.println(events[i].getName()+ ": "+events[i].getStartDate());
 			
 		}
 		
 	}
+
+
 	
 
 }
