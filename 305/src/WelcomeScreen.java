@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 
 
 /**
- * 	WORK IN PROGRESS
  *  The Welcome Screen acts as a "Main Screen" in which the user
  *  can see and interact with the program. Events and
  *  their properties are created in this class
@@ -26,16 +25,19 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	protected EventCollection collection; //the collection for events
 	private int x,y; //mouse clicked coordinates
 	private String time; //current time
+	
 	private String date; //current date
 	private Date d; 
 	
 	private Date start;//event start date+time
 	private Date end; //event end date+time
 
-	Scanner keyboard = new Scanner(System.in);	
-	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
-	
-	//TEST EVENTS
+	Scanner keyboard = new Scanner(System.in);		//Scanner
+	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");		//Format of the date
+    SimpleDateFormat df = new SimpleDateFormat("K:mm a"); 				//Format of the time
+    
+    
+	//TEST EVENTS START AND END DATES
 	private Date testStart1;
 	private Date testEndStart1;
 	private Date testEndStart2;
@@ -52,22 +54,21 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());	//This grabs current date+time
 		d = calendar.getTime();
-		
-	    SimpleDateFormat df = new SimpleDateFormat("H:mm a"); 				//Format of the time
-	    time = df.format(d);
-	    date = formatter.format(d);
+	    time = df.format(d);			//Format the time
+	    date = formatter.format(d);		//Format the dime
 	    
 	    
 	    System.out.println("Current date is " + date); 						//Print the date and time
 	    System.out.println("Current time is " + time);
-	    System.out.println("------------\n");
+	    
 	    
 	    collection = new ArrayEventCollection();				//Collection is created
+	    
+	    
 	    
 	    /*
 	     * I MADE 2 TEST EVENTS HERE
 	     */
-	    
 	    
 	    String testDate1= "10/22/2013 1:30 PM";			//Test events start & end dates
 	    String testEndDate1 = "12/6/2015 9:05 PM";
@@ -203,23 +204,21 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		System.out.print("Enter Start Time in H:MM format: "); 		//Prompt for event start time
 																	//ex. 1:30
 		
-		String sTime = keyboard.next();	//Get time
+		String sTime = keyboard.next(); //Get time
 		
-		
-		System.out.print("AM OR PM: ");  //Prompt for AM or PM
+		System.out.print("AM OR PM: ");  //Type AM or PM
 		String sAM_PM = keyboard.next(); //Get AM or PM
 		
-		System.out.print("Enter End Date in MM/DD/YYYY format: "); //Prompt for end date
-		String eDate = keyboard.next(); //Get end date
+		System.out.print("Enter End Date in MM/DD/YYYY format: "); 		//Prompt for end date
+		String eDate = keyboard.next(); 	//Get end date
 		
-		System.out.print("Enter end Time in H:MM (AM or PM) format: "); //Prompt for end time
-		String eTime = keyboard.next(); //Get end time
+		System.out.print("Enter end Time in H:MM (AM or PM) format: ");	//Prompt for end time
+		String eTime = keyboard.next();	//Get end time
 		
-		System.out.print("AM OR PM: ");	//Prompt for AM or PM for end time
+		System.out.print("AM OR PM: ");		//Prompt for AM or PM
 		String eAM_PM = keyboard.next();	//Get AM or PM
 		
-		
-		String startDate = sDate+" "+sTime+ " "+sAM_PM; //Combines the date and time into a single string
+		String startDate = sDate+" "+sTime+ " "+sAM_PM; //combines the date and time into a single string
 		String endDate =  eDate+" "+eTime+ " "+eAM_PM;
 		
 
@@ -230,9 +229,9 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
             if (start.compareTo(end) >= 0) { 		//Start is after end, therefore invalid
             	while(start.compareTo(end) >= 0)	//Keeps asking for end date until valid
             	{
-            		System.out.println("End date must be after start date");	//Invalid date was entered
+            		System.out.println("End date must be after start date");	//Invalid Date error
             		
-            		System.out.print("Enter End Date in MM/DD/YYYY format: ");	//Re-prompt for event details
+            		System.out.print("Enter End Date in MM/DD/YYYY format: ");	//Re-prompt
             		String eDate2 = keyboard.next();
             		
             		System.out.print("Enter end Time in H:MM format: ");
@@ -241,54 +240,51 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
             		System.out.print("AM OR PM: ");
             		String eAM_PM2 = keyboard.next();
             		
-            		String endDate2 =  eDate2+" "+eTime2 + " "+eAM_PM2;	//Combine strings
-            		end = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(endDate2); //Format
+            		String endDate2 =  eDate2+" "+eTime2 + " "+eAM_PM2;
+            		end = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(endDate2);
             	}	
 
             } 
 	        
-            
-		} catch (ParseException e) {	//Catch exception
+		} catch (ParseException e) { //Catch exceptions
 
-			e.printStackTrace();
+			e.printStackTrace();	
 		}
         
         
 		
-		System.out.print("Materials: ");	//Prompt for materials
-		String materials = keyboard.next(); //Get materials
+		System.out.print("Materials: ");		//Prompt for materials
+		String materials = keyboard.next();		//Get materials
 		
-		System.out.print("Location: ");		//Prompt for location
-		String loc = keyboard.next();		//Get location
+		System.out.print("Location: ");			//Prompt for location
+		String loc = keyboard.next();			//Get location
 	
 		
 
 		
-		int [] r = new int[7];	//Array to hold repeat days
+		int [] r = new int[7];		//Array to hold the repeat days
 		
 		System.out.println("Repeat days? Y for yes ");	//Prompt for repeat days
-		String repeat = keyboard.next();	//Get Y or N
+		String repeat = keyboard.next();	//Y or N
 
 
-		int i = 0; //Counter
+		int i = 0;	//Counter
 		
-		while (repeat.equals("Y"))	//While the answer from user is Y
+		while (repeat.equals("Y"))	//Keeps repeating until user enters N
 		{
-			System.out.println("What Day?"); //Prompt for the day
-			
-			int rDay = keyboard.nextInt(); //Get the day
-			
+			System.out.println("What Day?");	//Prompt for which date
+			int rDay = keyboard.nextInt();		//Get a day
 			if (rDay == 0 || rDay == 1|| rDay == 2||rDay ==3 ||rDay ==4 || rDay==5 || rDay ==6 )
 			{
-				r[i] = rDay; //Assign that day into the array
+				r[i] = rDay;	//Add that day to the array
 				i++;
-				System.out.print("Add another repeat day?");	//Ask if there are more repeat days
-				repeat = keyboard.next();		//Y or N
+				System.out.print("Add another repeat day?"); //Prompt for another day
+				repeat = keyboard.next();	//Y or N
 				
 			}
 			else
 			{
-				System.out.println("Invalid day:");	//If the repeat day is <0 or >6
+				System.out.println("Invalid day:");	//Error
 				
 			}
 			
@@ -298,7 +294,7 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
         
 		
 		Event newEvent = new Event(name, start,end,materials,loc,r);	//Create the event
-		collection.add(newEvent);	//Add it to the collection
+		collection.add(newEvent);		//Add the event to the collection
 		
 		
 	}

@@ -67,7 +67,7 @@ public class ArrayEventCollection implements EventCollection
 				events[i] = events[i+1];		//remove the selected
 			
 			size--;					//decrease current size counter
-			changeSelection(-1);	//Unselect
+			changeSelection(-1);	//De-select
 		
 	}
 
@@ -84,7 +84,7 @@ public class ArrayEventCollection implements EventCollection
 	public void reset(Event someEvent) {
 		
 		int i = 0;							
-		changeSelection(-1);	//Unselect
+		changeSelection(-1);	//De-select
 		
 		while (selected == -1 && i < size) 
 		{
