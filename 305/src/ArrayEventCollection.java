@@ -3,83 +3,93 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-
+/**
+ * ArrayEventCollection is our datastructure to hold the events.
+ *
+ */
 public class ArrayEventCollection implements EventCollection
 {
 	
 	private final int SIZE = 100; //Default size
-	private Event [] events;
-	private int size;
-	private int selected;
-	private Calendar calendar;
+	private Event [] events;		//Array of events
+	private int size;				//The current size
+	private int selected;			//The selected event
+	private Calendar calendar;		//The calendar
 	
+	/**
+	 * Constructor
+	 */
 	public ArrayEventCollection()
 	{
-		events = new Event[SIZE];
-		size = 0;
-		selected = -1;
+		events = new Event[SIZE];	//Instantiate the array 
+		
+		size = 0;		//Current size
+		selected = -1;	//Nothing selected
 		
 				
 	}
 	
 	/**
-	 *  changes the selected event
+	 *  Changes the selected event
 	 */
 	public void changeSelection(int newSelection)
 	{
-		selected = newSelection;
+		selected = newSelection;	//Change the selected to new selected
 	}
 	
 	/**
-	 * adds an event
+	 * Adds an event
 	 */
 	public void add(Event someEvent) {
-		if(selected == events.length)
+		if(selected == events.length)	//If the array is full
 		{
-			Event[] temp = new Event[events.length*2];
-			for(int i = 0; i<events.length; i++)
+			Event[] temp = new Event[events.length*2];	//Create a temp array with 2x the size
+			
+			for(int i = 0; i<events.length; i++)	
 			{
-				temp[i] = events[i];
-				events = temp;
+				temp[i] = events[i]; //Copy over the values in the array to temp
+				events = temp;		//Copy back the values in temp to events
 			}
 		}
-		events[size] = someEvent;
-		changeSelection(size++);
+		events[size] = someEvent;	//Add the event to array
+		changeSelection(size++);	//increase current size counter
 		
 		
 	}
 
 	/**
-	 * removes an event
+	 * Removes an event
 	 */
 
 	public void remove() 
 	{
 			for (int i = selected ; i < size-1; i++)
-				events[i] = events[i+1];
-			size--;
-			changeSelection(-1);
+				events[i] = events[i+1];		//remove the selected
+			
+			size--;					//decrease current size counter
+			changeSelection(-1);	//Unselect
 		
 	}
 
 
 	/**
-	 * resets to the beginning of the collection
+	 * Resets to the beginning of the collection
 	 */
 	public void reset() {
 
-		changeSelection(0);
+		changeSelection(0);	
 	}
 
 
 	public void reset(Event someEvent) {
 		
 		int i = 0;							
-		changeSelection(-1);					
+		changeSelection(-1);	//Unselect
+		
 		while (selected == -1 && i < size) 
 		{
-			if (events[i] == someEvent)
-				changeSelection(i);
+			if (events[i] == someEvent)	
+				changeSelection(i); 	//Change selected
 			i++;
 		}
 		
@@ -87,10 +97,13 @@ public class ArrayEventCollection implements EventCollection
 		
 	}
 
+	/**
+	 * Checks if the collection has another event
+	 */
 
 	public boolean hasNext() {
 
-		return (size > 0) && (selected >= 0) && (selected < size);
+		return (size > 0) && (selected >= 0) && (selected < size);	//Check for next event
 	}
 	
 	public void compareDates(Date d)
@@ -118,7 +131,8 @@ public class ArrayEventCollection implements EventCollection
 					
 				}
 				
-				/* otherwise remove it from the collection */
+				/* WIP
+				 * otherwise remove it from the collection */
 				
 			}
 	}
@@ -128,6 +142,9 @@ public class ArrayEventCollection implements EventCollection
 		
 	}
 	
+	/**
+	 * Displays the events on the console
+	 */
 	public void display()
 	{
 		System.out.println("---EVENTS---");

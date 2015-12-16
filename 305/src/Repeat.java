@@ -12,40 +12,39 @@ import java.util.TimeZone;
  */
 public class Repeat implements TimerListener {
 
-	private Timer timer;
-	private String currentDate;
-	private EventCollection collection;
-	private Calendar calendar;
-	private Date d;
-	SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy K:mm a");
-	private Date d2;
+	private Timer timer;			//The timer
+	private String currentDate;		//Current date
+	private EventCollection collection;		//The event collection
+	private Calendar calendar;				//Calendar
+	private Date d;					//To hold current date in date format
+	SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy K:mm a");	//Format of the date+time
+	private Date d2;	//Altered date
 
 	
 	public Repeat(EventCollection collection) 
 	{
 
-		this.collection = collection;
-		
+		this.collection = collection;	
 	    timer = new Timer(this); //Creates a timer
-	    timer.start();
+	    timer.start();	//Starts timer
 	    
 	
 	}
 	
 	public void refresh() {
-		timer.setPeriod(1000); //Timer set to 1 second
-		calendar = Calendar.getInstance(TimeZone.getDefault());
-		d = calendar.getTime();
-		currentDate = formatter.format(d);
+		timer.setPeriod(60000); //Timer set to 1 second (60000 milisecs)
+		calendar = Calendar.getInstance(TimeZone.getDefault());	//Get calendar instance
+		d = calendar.getTime();	//Get current date
+		currentDate = formatter.format(d);	//Format current date
 		try {
-			d2 = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(currentDate);
+			d2 = new SimpleDateFormat("MM/dd/yyyy K:mm a").parse(currentDate);	//Reformat current date
 		} catch (ParseException e) {
-		   // TODO Auto-generated catch block
+
 		   e.printStackTrace();
 	   }
 		 
 		
-		moveEvent();
+		moveEvent();	//Compare dates
 		
 		
 	}
@@ -56,7 +55,7 @@ public class Repeat implements TimerListener {
 	 * if so then you move it to the next day that it should repeat
 	 */
 	private void moveEvent() {
-			collection.compareDates(d2);
+			collection.compareDates(d2); //Compare the dates
 
 		}
 		
