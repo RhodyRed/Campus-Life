@@ -32,7 +32,7 @@ public class Repeat implements TimerListener {
 	}
 	
 	public void refresh() {
-		timer.setPeriod(60000); //Timer set to 1 second (60000 milisecs)
+		timer.setPeriod(1000); //Timer set to 1 second
 		calendar = Calendar.getInstance(TimeZone.getDefault());	//Get calendar instance
 		d = calendar.getTime();	//Get current date
 		currentDate = formatter.format(d);	//Format current date

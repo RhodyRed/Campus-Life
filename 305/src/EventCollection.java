@@ -30,6 +30,9 @@ public interface EventCollection {
 
 	public void compareDates(Date d);
 
+
+	public void adjust();
+
 	
 
 }

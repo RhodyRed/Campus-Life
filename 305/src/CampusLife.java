@@ -27,7 +27,7 @@ public class CampusLife {
 		WelcomeScreen campusLife = new WelcomeScreen();
 		
 		
-
+		campusLife.setBackground(Color.lightGray);	//Background color
 		campusLife.setSize(800,600); //just some random size and color	
 		campusLife.setVisible(true);
 

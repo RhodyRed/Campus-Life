@@ -1,15 +1,19 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
 public class Event {
 	
-	private String name;
-	private Date start;
-	private Date end;
-	private String loc;
-	private String materials;
-	private int[] repeat;
-	private boolean repeatDays = false;
+	private String name;	//Name of the event
+	private Date start;		//Start date of the event
+	private Date end;		//End date of the event
+	private String loc;		//Location
+	private String materials;		//Materials
+	private int[] repeat;			//Array of days for repeat
+	
+	private boolean repeatDays = false;		//Days that are repeating
 	private boolean repeatSun = false;
 	private boolean repeatMon = false;
 	private boolean repeatTue = false;
@@ -17,6 +21,19 @@ public class Event {
 	private boolean repeatThu = false;
 	private boolean repeatFri = false;
 	private boolean repeatSat = false;
+	
+	private int x;	//Coordinates of the events
+	private int y;	//for drawing..
+	
+	private String startDate;	//Dates+times formatted as strings
+	private String startTime;
+	private String endDate;
+	private String endTime;
+	
+	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");			//Format of the date
+    SimpleDateFormat df = new SimpleDateFormat("K:mm:ss a"); 				//Format of the time
+
+	
 	
 	public Event(){
 		
@@ -28,23 +45,39 @@ public class Event {
 	 */
 	public Event(String n, Date s, Date e, String l, String mat, int[] r)
 	{
-		name = n;
+		name = n;			//Set the event properties
 		setStartDate(s);
 		setEndDate(e);
 		loc = l;
 		materials = mat;
 		repeat = r;
-		checkForRepeats();
+		
+		
+		checkForRepeats();		//Check for repeating days
 
 	}
 	
+	
+	public void setX(int val)
+	{
+		x = val;	//Set the x coordinate
+	}
+	public void setY(int val)
+	{
+		y = val;	//Set the y coordinate
+	}
+	
 	public void setStartDate(Date s) {
-		start = s;
+		start = s;	//Set the start date
+	    startTime = df.format(start);			//Format the start time
+	    startDate = formatter.format(start);		//Format the  start date
 		
 	}
 	public void setEndDate(Date e)
 	{
-		end = e;
+		end = e;	//Set the end date
+	    endDate = formatter.format(end);		//Format the end date
+		endTime = df.format(end);				//Format the end time
 	}
 
 	
@@ -52,11 +85,11 @@ public class Event {
 	
 	private void checkForRepeats() {
 		
-		if (repeat != null)
+		if (repeat != null)	//If there are repeating days
 		{
-			repeatDays(true);
+			repeatDays(true);	//The event repeating is true 
 
-			for(int i = 0; i<repeat.length; i++)
+			for(int i = 0; i<repeat.length; i++)	 //Check which day
 			{
 				if(repeat[i] == 0)
 				{
@@ -234,6 +267,13 @@ public class Event {
 	public void setMaterials(String newMaterials)
 	{
 		materials = newMaterials;
+	}
+
+	public void paint(Graphics pane) {
+		pane.setColor(Color.black);
+		pane.drawString(name+ ": ", x, y);	//Draw the name
+		pane.drawString(startDate + " ---- " + startTime, x+120, y+19);	//Draw the start date+time
+		pane.drawRect(x-10, y-20, 280, 40);
 	}
 
 

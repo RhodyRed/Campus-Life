@@ -1,5 +1,7 @@
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,8 +22,9 @@ import javax.swing.JFrame;
  *  their properties are created in this class
  * 
  */
-public class WelcomeScreen extends JFrame implements MouseListener  {
+public class WelcomeScreen extends Frame implements MouseListener, TimerListener  {
 	
+	private Calendar calendar;
 	protected EventCollection collection; //the collection for events
 	private int x,y; //mouse clicked coordinates
 	private String time; //current time
@@ -34,14 +37,16 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 
 	Scanner keyboard = new Scanner(System.in);		//Scanner
 	SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");		//Format of the date
-    SimpleDateFormat df = new SimpleDateFormat("K:mm a"); 				//Format of the time
+    SimpleDateFormat df = new SimpleDateFormat("K:mm:ss a"); 				//Format of the time
     
+    private Timer clock;	//A timer for a clock that holds current time
     
 	//TEST EVENTS START AND END DATES
 	private Date testStart1;
 	private Date testEndStart1;
 	private Date testEndStart2;
 	private Date testStart2;
+	
 
 	
 	
@@ -50,13 +55,15 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	 */
 	public WelcomeScreen() {
 		
+		clock = new Timer(this);	//Create the clock
+		clock.setPeriod(1000);	//Set to one second
+		clock.start();	//Start the clock
 		addMouseListener(this);
 		
-		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());	//This grabs current date+time
+		calendar = Calendar.getInstance(TimeZone.getDefault());	//This grabs current date+time
 		d = calendar.getTime();
 	    time = df.format(d);			//Format the time
 	    date = formatter.format(d);		//Format the dime
-	    
 	    
 	    System.out.println("Current date is " + date); 						//Print the date and time
 	    System.out.println("Current time is " + time);
@@ -70,8 +77,8 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 	     * I MADE 2 TEST EVENTS HERE
 	     */
 	    
-	    String testDate1= "10/22/2013 1:30 PM";			//Test events start & end dates
-	    String testEndDate1 = "12/6/2015 9:05 PM";
+	    String testDate1= "12/16/2015 8:40 PM";			//Test events start & end dates
+	    String testEndDate1 = "12/16/2015 9:07 PM";
 	    String testDate2= "9/12/2013 3:30 PM";
 	    String testEndDate2 = "12/6/2015 7:48 PM";
 	    
@@ -100,28 +107,23 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 
 	    Repeat repeating = new Repeat(collection); //Start checking for repeats
 	    
+	    collection.adjust();	//Adjust the position of the collection
+	    
+	    
 	    
 
 
 
-
 		
 	}
 
 
 
 
-	public void paint(Graphics p) 
-	{
-		
-		p.drawString("Create Event", 50, 50);					//Test "buttons"
-		p.drawString("Display the collection", 50, 350);
 
 
-	}
 
-	
-	
+
 
 	/**
 	 * Not sure if MouseEvents are needed if we're using JButtons??
@@ -154,7 +156,7 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		//If you click the upper left of the screen
 		//It creates an event
-		if(x <= 100 && y <= 100)
+		if(x >= 40 && x<= 140 && y>=280 && y<=310)
 		{
 			createEvent();
 
@@ -163,13 +165,13 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		
 		//Click bottom left of screen to see the events in collection
-		if(x<=200 && y>=300)
+		if(x>=40 && x<=140 && y>=330 && y<= 360)
 		{
 			collection.display(); 	//Display the collection
+
 		}
 		
-		
-	
+
 		
 	}
 
@@ -212,7 +214,7 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		System.out.print("Enter End Date in MM/DD/YYYY format: "); 		//Prompt for end date
 		String eDate = keyboard.next(); 	//Get end date
 		
-		System.out.print("Enter end Time in H:MM (AM or PM) format: ");	//Prompt for end time
+		System.out.print("Enter end Time in H:MM format: ");	//Prompt for end time
 		String eTime = keyboard.next();	//Get end time
 		
 		System.out.print("AM OR PM: ");		//Prompt for AM or PM
@@ -295,6 +297,8 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		Event newEvent = new Event(name, start,end,materials,loc,r);	//Create the event
 		collection.add(newEvent);		//Add the event to the collection
+		collection.adjust();	//Adjust the collection
+		repaint();
 		
 		
 	}
@@ -306,7 +310,71 @@ public class WelcomeScreen extends JFrame implements MouseListener  {
 		
 		
 	}
+
+
+
+
+	@Override
+	public void refresh() {
+		
+
+	    repaint();
+	  
+	    
+		
+	}
+	public void paint(Graphics p) 
+	{
+		if (collection != null)			//If the collection is not empty		
+			collection.paint(p);	//Draw the events inside it
+		
+		drawButtons(p);	//Draw the "buttons"
+		drawDetails(p);	//Draw the date+time
+
+		
+	}
 	
+
+
+
+
+
+
+
+
+
+
+	private void drawButtons(Graphics p) 
+	{
+		p.setColor(Color.RED);		//Drawing the test "buttons"
+		p.fillRect(40,280,100,30);
+		p.fillRect(40,330,140,30);
+		p.setColor(Color.white);
+		p.drawRect(40,280,100,30);
+		p.drawRect(40,330,140,30);
+		p.drawString("Create Event", 50, 300);					
+		p.drawString("Display the collection", 50, 350);
+		p.setColor(Color.black);
+		
+	}
+
+	private void drawDetails(Graphics p) {
+		
+		p.setColor(Color.green);	
+		p.fillRect(280, 40, 155, 100);
+		Font stringFont = new Font( "SansSerif", Font.BOLD, 22 );	//Creates a font
+		p.setFont(stringFont);
+		p.setColor(Color.red);
+		p.drawRect(280, 40, 155, 100);
+		calendar = Calendar.getInstance(TimeZone.getDefault());
+		d = calendar.getTime();
+	    time = df.format(d);			//Format the time
+	    date = formatter.format(d);		//Format the dime
+		p.drawString(time, 300, 120);	//Draw time
+		p.drawString(date,300, 80);	//Draw date
+
+	}
+
 
 
 	

@@ -106,6 +106,11 @@ public class ArrayEventCollection implements EventCollection
 		return (size > 0) && (selected >= 0) && (selected < size);	//Check for next event
 	}
 	
+	
+	/**
+	 * This method compares the current date and time to the
+	 * end date and times within the events in the collection
+	 */
 	public void compareDates(Date d)
 	{
 
@@ -138,8 +143,17 @@ public class ArrayEventCollection implements EventCollection
 	}
 
 
+	/**
+	 * Draw events
+	 */
+	
 	public void paint(Graphics pane) {
-		
+			if (events!= null){				//Paint all the events onto the screen
+				for(int i = 0; i<size; i++)
+					events[i].paint(pane);
+			}
+
+
 	}
 	
 	/**
@@ -147,10 +161,33 @@ public class ArrayEventCollection implements EventCollection
 	 */
 	public void display()
 	{
-		System.out.println("---EVENTS---");
+		System.out.println("---EVENTS---\n");
 		for(int i =0; i<size; i++)
 		{
-			System.out.println(events[i].getName()+ ": "+events[i].getStartDate());
+			System.out.println(events[i].getName());	//Display name
+			System.out.println("---Start Date:  " +events[i].getStartDate());	//Display start date
+			System.out.println("---End Date:  " +events[i].getEndDate());		//end date
+			System.out.println("---Location:  " +events[i].getLoc());			//location
+			System.out.println("---Materials:  " +events[i].getMaterials());	//materials
+			System.out.println();
+		}
+		
+	}
+
+	/**
+	 * This method adjusts the x and y coordinates of the events
+	 * in the collection
+	 */
+	public void adjust() 
+	{
+		int x = 400;	//First event's coordinates
+		int y = 200;
+		
+		for(int i =0; i<size; i++)
+		{
+			events[i].setX(x);	//Set the coordinates
+			events[i].setY(y);
+			y+=40;	
 			
 		}
 		
